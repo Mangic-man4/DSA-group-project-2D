@@ -13,11 +13,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/*
 public class HeatMapVisual : MonoBehaviour {
 
-    /*
-    private Grid grid;
+    
+    private Grid2d<bool> grid;
     private Mesh mesh;
     private bool updateMesh;
 
@@ -26,11 +26,11 @@ public class HeatMapVisual : MonoBehaviour {
         GetComponent<MeshFilter>().mesh = mesh;
     }
 
-    public void SetGrid(Grid grid) {
+    public void SetGrid(Grid2d<bool> grid) {
         this.grid = grid;
         UpdateHeatMapVisual();
 
-        grid.OnGridValueChanged += Grid_OnGridValueChanged;
+        grid.OnGridObjectChanged += Grid_OnGridObjectChanged;
     }
 
     private void Grid_OnGridValueChanged(object sender, Grid.OnGridValueChangedEventArgs e) {
@@ -63,6 +63,7 @@ public class HeatMapVisual : MonoBehaviour {
         mesh.uv = uv;
         mesh.triangles = triangles;
     }
-    */
+    
 
 }
+*/

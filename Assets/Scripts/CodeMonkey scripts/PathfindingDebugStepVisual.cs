@@ -9,7 +9,7 @@
                unitycodemonkey.com
     --------------------------------------------------
  */
-/*
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -34,7 +34,7 @@ public class PathfindingDebugStepVisual : MonoBehaviour {
         gridSnapshotActionList = new List<GridSnapshotAction>();
     }
 
-    public void Setup(Grid<PathNode> grid) {
+    public void Setup(Grid2d<PathNode2d> grid) {
         visualNodeArray = new Transform[grid.GetWidth(), grid.GetHeight()];
 
         for (int x = 0; x < grid.GetWidth(); x++) {
@@ -82,13 +82,13 @@ public class PathfindingDebugStepVisual : MonoBehaviour {
         gridSnapshotActionList.Clear();
     }
 
-    public void TakeSnapshot(Grid<PathNode> grid, PathNode current, List<PathNode> openList, List<PathNode> closedList) {
+    public void TakeSnapshot(Grid2d<PathNode2d> grid, PathNode2d current, List<PathNode2d> openList, List<PathNode2d> closedList) {
         GridSnapshotAction gridSnapshotAction = new GridSnapshotAction();
         gridSnapshotAction.AddAction(HideNodeVisuals);
         
         for (int x = 0; x < grid.GetWidth(); x++) {
             for (int y = 0; y < grid.GetHeight(); y++) {
-                PathNode pathNode = grid.GetGridObject(x, y);
+                PathNode2d pathNode = grid.GetGridObject(x, y);
 
                 int gCost = pathNode.gCost;
                 int hCost = pathNode.hCost;
@@ -124,13 +124,13 @@ public class PathfindingDebugStepVisual : MonoBehaviour {
         gridSnapshotActionList.Add(gridSnapshotAction);
     }
 
-    public void TakeSnapshotFinalPath(Grid<PathNode> grid, List<PathNode> path) {
+    public void TakeSnapshotFinalPath(Grid2d<PathNode2d> grid, List<PathNode2d> path) {
         GridSnapshotAction gridSnapshotAction = new GridSnapshotAction();
         gridSnapshotAction.AddAction(HideNodeVisuals);
         
         for (int x = 0; x < grid.GetWidth(); x++) {
             for (int y = 0; y < grid.GetHeight(); y++) {
-                PathNode pathNode = grid.GetGridObject(x, y);
+                PathNode2d pathNode = grid.GetGridObject(x, y);
 
                 int gCost = pathNode.gCost;
                 int hCost = pathNode.hCost;
@@ -202,4 +202,3 @@ public class PathfindingDebugStepVisual : MonoBehaviour {
     }
 
 }
-*/

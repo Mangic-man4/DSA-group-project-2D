@@ -7,15 +7,18 @@ using UnityEngine;
 public class Grid2d<TGridObject>
 {
 
-    public event EventHandler<OnGridObjectChangedEventArgs> OnGridObjectChanged;
+    //public const int HEAT_MAP_MAX_VALUE = 100;
+    //public const int HEAT_MAP_MIN_VALUE = 0;
+
+
+    public event EventHandler<OnGridObjectChangedEventArgs> OnGridObjectChanged; // Event triggered when a grid object changes 
     public class OnGridObjectChangedEventArgs : EventArgs
     {
         public int x;
         public int y;
     }
 
-
-
+    // Grid properties
     private int width;
     private int height;
     private float cellSize;
@@ -31,7 +34,7 @@ public class Grid2d<TGridObject>
 
         gridArray = new TGridObject[width, height];
 
-        for (int x = 0; x < gridArray.GetLength(0); x++)
+        for (int x = 0; x < gridArray.GetLength(0); x++) // Populate grid with grid objects
         {
             for (int y = 0; y < gridArray.GetLength(1); y++)
             {
@@ -39,7 +42,7 @@ public class Grid2d<TGridObject>
             }
         }
 
-        bool showDebug = true;
+        bool showDebug = true; // Debug visualization
         if (showDebug)
         {
             TextMesh[,] debugTextArray = new TextMesh[width, height];
@@ -58,60 +61,62 @@ public class Grid2d<TGridObject>
             Debug.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height), Color.white, 100f);
             Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), Color.white, 100f);
 
-            OnGridObjectChanged += (object sender, OnGridObjectChangedEventArgs eventArgs) =>
+            OnGridObjectChanged += (object sender, OnGridObjectChangedEventArgs eventArgs) => // Update debug text when grid object changes
             {
                 debugTextArray[eventArgs.x, eventArgs.y].text = gridArray[eventArgs.x, eventArgs.y]?.ToString();
             };
         }
     }
 
-    public int GetWidth()
+    public int GetWidth() // Get grid width
     {
         return width;
     }
 
-    public int GetHeight()
+    public int GetHeight() // Get grid height
     {
         return height;
     }
 
-    public float GetCellSize()
+    public float GetCellSize() // Get cell size
     {
         return cellSize;
     }
 
-    public Vector3 GetWorldPosition(int x, int y)
+    public Vector3 GetWorldPosition(int x, int y) // Convert grid coordinates to world position
     {
         return new Vector3(x, y) * cellSize + originPosition;
     }
 
-    public void GetXY(Vector3 worldPosition, out int x, out int y)
+    public void GetXY(Vector3 worldPosition, out int x, out int y) // Convert world position to grid coordinates
     {
         x = Mathf.FloorToInt((worldPosition - originPosition).x / cellSize);
         y = Mathf.FloorToInt((worldPosition - originPosition).y / cellSize);
     }
 
-    public void SetGridObject(int x, int y, TGridObject value)
+    public void SetGridObject(int x, int y, TGridObject value) // Set grid object at specified coordinates
     {
         if (x >= 0 && y >= 0 && x < width && y < height)
         {
             gridArray[x, y] = value;
+            // Trigger event
             if (OnGridObjectChanged != null) OnGridObjectChanged(this, new OnGridObjectChangedEventArgs { x = x, y = y });
         }
     }
-    public void SetGridObject(Vector3 worldPosition, TGridObject value)
+
+    public void SetGridObject(Vector3 worldPosition, TGridObject value) // Set grid object at specified world position
     {
         int x, y;
         GetXY(worldPosition, out x, out y);
         SetGridObject(x, y, value);
     }
 
-    public void TriggerGridObjectChanged(int x, int y)
+    public void TriggerGridObjectChanged(int x, int y) // Trigger event when a grid object changes
     {
         if (OnGridObjectChanged != null) OnGridObjectChanged(this, new OnGridObjectChangedEventArgs { x = x, y = y });
     }
 
-    public TGridObject GetGridObject(int x, int y)
+    public TGridObject GetGridObject(int x, int y) // Get grid object at specified coordinates
     {
         if (x >= 0 && y >= 0 && x < width && y < height)
         {
@@ -122,7 +127,7 @@ public class Grid2d<TGridObject>
             return default(TGridObject);
         }
     }
-    public TGridObject GetGridObject(Vector3 worldPosition)
+    public TGridObject GetGridObject(Vector3 worldPosition) // Get grid object at specified world position
     {
         int x, y;
         GetXY(worldPosition, out x, out y);

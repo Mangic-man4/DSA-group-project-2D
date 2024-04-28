@@ -9,14 +9,14 @@
                unitycodemonkey.com
     --------------------------------------------------
  */
-/*
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PathfindingVisual : MonoBehaviour {
 
-    private Grid<PathNode> grid;
+    private Grid2d<PathNode2d> grid;
     private Mesh mesh;
     private bool updateMesh;
 
@@ -25,14 +25,14 @@ public class PathfindingVisual : MonoBehaviour {
         GetComponent<MeshFilter>().mesh = mesh;
     }
 
-    public void SetGrid(Grid<PathNode> grid) {
+    public void SetGrid(Grid2d<PathNode2d> grid) {
         this.grid = grid;
         UpdateVisual();
 
         grid.OnGridObjectChanged += Grid_OnGridValueChanged;
     }
 
-    private void Grid_OnGridValueChanged(object sender, Grid<PathNode>.OnGridObjectChangedEventArgs e) {
+    private void Grid_OnGridValueChanged(object sender, Grid2d<PathNode2d>.OnGridObjectChangedEventArgs e) {
         updateMesh = true;
     }
 
@@ -51,7 +51,7 @@ public class PathfindingVisual : MonoBehaviour {
                 int index = x * grid.GetHeight() + y;
                 Vector3 quadSize = new Vector3(1, 1) * grid.GetCellSize();
 
-                PathNode pathNode = grid.GetGridObject(x, y);
+                PathNode2d pathNode = grid.GetGridObject(x, y);
 
                 if (pathNode.isWalkable) {
                     quadSize = Vector3.zero;
@@ -67,4 +67,4 @@ public class PathfindingVisual : MonoBehaviour {
     }
 
 }
-*/
+

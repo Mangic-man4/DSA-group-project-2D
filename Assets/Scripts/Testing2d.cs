@@ -7,14 +7,17 @@ public class Testing2d : MonoBehaviour
 {
     //private Grid2d<int> grid;
     //private List<Grid2d<int>> grids = new List<Grid2d<int>>();
-    private Grid2d<HeatMapGridObject> grid;
-    private Grid2d<bool> boolGrid;
-    private Grid2d<StringGridObject> stringGrid;
+    private Grid2d<HeatMapGridObject> grid; // Grid for heatmap visualization
+    private Grid2d<bool> boolGrid; // Grid for boolean values
+    private Grid2d<StringGridObject> stringGrid; // Grid for string values
 
     void Start()
     {
+        // Initialize heatmap grid
         grid = new Grid2d<HeatMapGridObject>(20, 10, 8f, Vector3.zero, (Grid2d<HeatMapGridObject> g, int x, int y) => new HeatMapGridObject(g, x, y));
+        // Initialize boolean grid
         //boolGrid = new Grid<bool>(20, 10, 8f, Vector3.zero, (Grid<bool> g, int x, int y) => false);
+        // Initialize string grid
         //stringGrid = new Grid<StringGridObject>(20, 10, 8f, Vector3.zero, (Grid<StringGridObject> g, int x, int y) => new StringGridObject(g, x, y));
 
         /*
@@ -32,9 +35,9 @@ public class Testing2d : MonoBehaviour
     {
         Vector3 position = UtilsClass.GetMouseWorldPosition();
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0)) // Left click
         {
-            HeatMapGridObject heatMapGridObject = grid.GetGridObject(position);
+            HeatMapGridObject heatMapGridObject = grid.GetGridObject(position); // Add value to the heatmap grid at the mouse position
             if (heatMapGridObject != null)
             {
                 heatMapGridObject.AddValue(5);
@@ -45,7 +48,7 @@ public class Testing2d : MonoBehaviour
             }*/
         }
 
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1)) // Right click
         {
                 /*
             // Get the mouse world position
@@ -67,7 +70,7 @@ public class Testing2d : MonoBehaviour
         }
     }
 }
-public class HeatMapGridObject
+public class HeatMapGridObject // Class representing a grid object for heatmap visualization
 {
 
     private const int MIN = 0;
@@ -85,26 +88,29 @@ public class HeatMapGridObject
         this.y = y;
     }
 
-    public void AddValue(int addValue)
+    public void AddValue(int addValue)     // Add a value to the grid object
+
     {
         value += addValue;
         value = Mathf.Clamp(value, MIN, MAX);
         grid.TriggerGridObjectChanged(x, y);
     }
 
-    public float GetValueNormalized()
+    public float GetValueNormalized()     // Get the normalized value of the grid object
+
     {
         return (float)value / MAX;
     }
 
-    public override string ToString()
+    public override string ToString()     // Override ToString method to provide a string representation of the grid object
+
     {
         return value.ToString();
     }
 
 }
 
-public class StringGridObject
+public class StringGridObject // Class representing a grid object for string visualization
 {
 
     private Grid2d<StringGridObject> grid;
@@ -123,19 +129,21 @@ public class StringGridObject
         numbers = "";
     }
 
-    public void AddLetter(string letter)
+    public void AddLetter(string letter)     // Add a letter to the grid object
+
     {
         letters += letter;
         grid.TriggerGridObjectChanged(x, y);
     }
 
-    public void AddNumber(string number)
+    public void AddNumber(string number)     // Add a number to the grid object
+
     {
         numbers += number;
-        grid.TriggerGridObjectChanged(x, y);
+        grid.TriggerGridObjectChanged(x, y);     
     }
 
-    public override string ToString()
+    public override string ToString() // Override ToString method to provide a string representation of the grid object
     {
         return letters + "\n" + numbers;
     }
